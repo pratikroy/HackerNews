@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="w-75">
+  <h1>Reply to comment</h1>
+  <hr class="mt-1">
+  <p>You are replying to: <em>{{ parent_comment.body }}</em></p>
+  <form action="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" value="Submit reply" class="btn btn-primary">
+  </form>
+</div>
+{% endblock %}

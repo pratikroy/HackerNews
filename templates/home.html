@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="w-75 bg-white">
+    <h1>All submitted links</h1>
+    <hr class="mt-1">
+    {% for link in all_links %}
+      <div class="shadow-sm bg-white border px-2 py-1 mb-2">
+        <h4><a href="{{ link.url }}">{{ link.title }}</a></h4>
+        <hr class="mt-1">
+        <p>
+          <strong>Date: </strong>{{ link.submitted_on }} |
+          <strong>By: </strong>{{ link.submitted_by }} |
+          <a href="{% url 'submission-detail' pk=link.pk %}">View Comments</a> |
+          {% if request.user in link.upvotes.all %}
+            <a href="{% url 'remove-upvote' link_pk=link.pk %}">Remove Upvote</a>
+          {% else %}
+            <a href="{% url 'upvote-submission' link_pk=link.pk %}">Upvote</a>
+          {% endif %}
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

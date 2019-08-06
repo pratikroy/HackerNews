@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+  <h3>New comment</h3>
+  <p><strong>You are commenting on:</strong>
+    <a href="{% url 'submission-detail' pk=submission.pk %}">{{ submission.title }}</a>
+  </p>
+  <form action="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" value="Post Comment" class="btn btn-primary">
+  </form>
+{% endblock %}

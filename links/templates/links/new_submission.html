@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="w-75">
+  <h1>New submission</h1>
+  <hr class="mt-1">
+  <div class="new-submission-form">
+    <form action="" method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+  </div>
+</div>
+{% endblock %}

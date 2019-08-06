@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="w-75">
+  <h1>Submitted link details</h1>
+  <hr class="mt-1">
+  <h3><a href="{{ link_detail.url }}" target="_blank">{{ link_detail.title }}</a></h3>
+  <p><strong>Submitted By</strong>: {{ link_detail.submitted_by.username }}</p>
+  <p><strong>Submitted On(UTC)</strong>: {{ link_detail.submitted_on }}</p>
+  <hr class="mt-1">
+  <p>
+    <h4><strong>Submit new comment</strong></h4>
+    <hr class="mt-1">
+    <form action="{% url 'new-comment' %}?link_pk={{ link_detail.pk }}" method="post">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <input type="submit" value="Comment" class="btn btn-primary">
+    </form>
+  </p>
+  <p>
+    <h4><strong>Comments</strong></h4>
+    <hr class="mt-1">
+    <ul>
+      {% for comment in comments %}
+        <li>{{ comment.body|linebreaks }}</li>
+        <p>
+          <strong>By: </strong>{{ comment.commented_by.username }},
+          <strong>On(UTC): </strong>{{ comment.created_on }},
+          <a href="{% url 'new-comment-reply' %}?link_pk={{ link_detail.pk }}&parent_comment_pk={{ comment.pk }}">Reply</a>
+        </p>
+        {% if comment.comment_set.exists %}
+        <ul>
+          {% for reply in comment.comment_set.all %}
+            <li>
+              <hr class="mt-1">
+              {{ reply.body }}
+              (<em>{{ reply.commented_by.username }}, {{ reply.created_on }}</em>)
+            </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <hr class="mt-1">
+      {% endfor %}
+    </ul>
+  </p>
+</div>
+{% endblock %}

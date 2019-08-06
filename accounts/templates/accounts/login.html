@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+  <div class="w-75 border p-3 my-5 shadow">
+    <h1>Login</h1>
+    <hr class="mt-1">
+    <form action="{% url "login" %}" method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <input type="submit" value="Login" class="btn btn-primary">
+    </form>
+  </div>
+{% endblock %}
